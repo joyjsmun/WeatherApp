@@ -10,8 +10,19 @@ import {
   ActivityIndicator,
 } from "react-native";
 
+import { Fontisto } from "@expo/vector-icons";
+
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const API_KEY = "6ab68981aee2954e9ffb336b6a2dfc02";
+const icons = {
+  Clouds: "cloudy",
+  Clear: "day-sunny",
+  Atmosphere: "cloudy-gusts",
+  Snow: "snow",
+  Rain: "rains",
+  Drizzle: "rain",
+  Thunderstorm: "lightning",
+};
 
 export default function App() {
   const [city, setCity] = useState("Loading...");
@@ -56,15 +67,34 @@ export default function App() {
         contentContainerStyle={styles.weather}
       >
         {days.length === 0 ? (
-          <View style={styles.day}>
-            <ActivityIndicator color="tomato" size="large" />
+          <View style={{ ...styles.day, alignItems: "center" }}>
+            <ActivityIndicator
+              color="white"
+              style={{ marginTop: 10 }}
+              size="large"
+            />
           </View>
         ) : (
           days.map((day, index) => (
             <View key={index} style={styles.day}>
-              <Text style={styles.temp}>
-                {parseFloat(day.temp.day).toFixed(1)}
-              </Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={styles.temp}>
+                  {parseFloat(day.temp.day).toFixed(1)}
+                </Text>
+                <Fontisto
+                  name={icons[day.weather[0].main]}
+                  size={70}
+                  color="white"
+                />
+              </View>
+
               <Text style={styles.desc}>{day.weather[0].main}</Text>
               <Text style={styles.tinyText}>{day.weather[0].description}</Text>
             </View>
@@ -78,7 +108,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffff8f",
+    backgroundColor: "tomato",
   },
   city: {
     flex: 1,
@@ -86,21 +116,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   cityName: {
-    color: "black",
+    color: "white",
     fontSize: 49,
-    fontWeight: "600",
+    fontWeight: "500",
   },
   weather: {},
   day: {
     width: SCREEN_WIDTH,
-    alignItems: "center",
+    alignItems: "flex-start",
+    paddingLeft: 20,
   },
   temp: {
     marginTop: 40,
-    fontSize: 140,
+    fontSize: 90,
+    fontWeight: "500",
+    color: "white",
   },
   tinyText: {
     fontSize: 20,
+    color: "white",
   },
-  desc: { fontSize: 40, marginTop: -20 },
+  desc: { marginTop: -10, fontSize: 40, marginTop: -20, color: "white" },
 });
