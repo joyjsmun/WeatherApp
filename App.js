@@ -88,11 +88,13 @@ export default function App() {
                 <Text style={styles.temp}>
                   {parseFloat(day.temp.day).toFixed(1)}
                 </Text>
-                <Fontisto
-                  name={icons[day.weather[0].main]}
-                  size={70}
-                  color="white"
-                />
+                <Text style={{ marginRight: 30 }}>
+                  <Fontisto
+                    name={icons[day.weather[0].main]}
+                    size={70}
+                    color="white"
+                  />
+                </Text>
               </View>
 
               <Text style={styles.desc}>{day.weather[0].main}</Text>
